@@ -41,6 +41,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public PropertyDTO updateProperty(PropertyDTO dto, int PropertyId) {
+		PropertyDTO UpdatedDTO = new PropertyDTO();
 		Optional<PropertyEntity> entity = repo.findById(PropertyId);
 		if (entity.isPresent()) {
 			PropertyEntity pe = entity.get();
@@ -52,8 +53,10 @@ public class PropertyServiceImpl implements PropertyService {
 			pe.setPrice(dto.getPrice());
 			pe.setId(dto.getId());
 			repo.save(pe);
+
+			UpdatedDTO = converting.convertEntityToDTO(pe);
 		}
-		return dto;
+		return UpdatedDTO;
 	}
 
 	@Override
